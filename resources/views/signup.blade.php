@@ -8,6 +8,7 @@
                 <div class="title m-b-md">
                     <div class="error" style="color: red; font-size: 18px;">{{ $errorMessage ?? '' }}</div>
                     <form method="POST" action='/sign-up'>
+                        @csrf
                         <div class="form-group">
                             <label for="signUpLogin">Login:</label>
                             <input class="form-control" type="text" name="login" id="signUpLogin" value="{{ $inputVal ?? '' }}">
