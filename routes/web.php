@@ -11,9 +11,17 @@
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//})->name('homePage');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.primary');
 })->name('homePage');
+
+Route::get('/one', function () {
+    return view('layouts.secondary')->name('InnerPage');
+});
 
 Route::get('/article/{id?}','TestController@article')
     ->where('id', '[0-9]+')
