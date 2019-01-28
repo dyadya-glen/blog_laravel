@@ -11,16 +11,20 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//})->name('homePage');
+Route::get('/', 'MainController@index')->name('homePage');
 
-Route::get('/', function () {
-    return view('layouts.primary');
-})->name('homePage');
+Route::get('/about-me', function () {
+    return view('layouts.primary',[
+        'page' => 'about',
+        'title' => 'Обо мне'
+    ]);
+});
 
 Route::get('/one', function () {
-    return view('layouts.secondary')->name('InnerPage');
+    return view('layouts.secondary',[
+        'page' => 'pages.post',
+        'title' => 'Пост'
+    ]);
 });
 
 Route::get('/article/{id?}','TestController@article')
@@ -42,7 +46,6 @@ Route::post('/article-add','TestController@showArticleAddData')->name('ArticleAd
 
 Route::get('/about-me/user','TestController@data');
 
-Route::view('/about-me', 'about');
 
 Route::put('/testput', function () {
     return 'PUT!!!';

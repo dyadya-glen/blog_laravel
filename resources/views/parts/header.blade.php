@@ -17,7 +17,10 @@
             <div class="collapse  navbar-collapse" id="readable-navbar-collapse">
                 <ul class="navigation">
                     <li class="dropdown active">
-                        <a href="index.html" class="dropdown-toggle" data-toggle="dropdown">Главная</a>
+                        <a href="/" class="dropdown-toggle" data-toggle="dropdown">Главная</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="one" class="dropdown-toggle" data-toggle="dropdown">Пост</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Тест</a>
@@ -32,7 +35,7 @@
                         <a href="elements.html" class="dropdown-toggle" data-toggle="dropdown">Верстка</a>
                     </li>
                     <li class="">
-                        <a href="about.html" class="dropdown-toggle" data-toggle="dropdown">Обо мне</a>
+                        <a href="about-me" class="dropdown-toggle" data-toggle="dropdown">Обо мне</a>
                     </li>
                     <li class="">
                         <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown">Обратная связь</a>

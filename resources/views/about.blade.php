@@ -1,13 +1,7 @@
-@extends('layout')
-
-@section('title', 'Обо мне')
-
-@section('content')
-    <div class="flex-center position-ref full-height">
-        <div class="content">
-            <div class="title m-b-md">
-                <h1>Обо мне</h1>
-            </div>
-        </div>
+<div class="boxed  push-down-45">
+    <div class="meta">
+        <img class="wp-post-image" src="assets/images/dummy-licensed/glen.jpg" alt="Blog image" width="748" height="324">
     </div>
-@endsection
+</div>
+        <h1>Обо мне</h1>
+

@@ -1,7 +1,7 @@
 @extends('layouts.two-column')
 
 @section('left-column')
-    <h1>Content</h1>
+    @include($page)
 @endsection
 
 @section('right-column')
