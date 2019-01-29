@@ -15,10 +15,24 @@ Route::get('/', 'MainController@index')->name('homePage');
 
 Route::get('/about-me', function () {
     return view('layouts.primary',[
-        'page' => 'about',
+        'page' => 'pages.about',
         'title' => 'Обо мне'
     ]);
 });
+
+Route::group(['prefix' => 'feedback'], function () {
+
+    Route::get('', 'FeedbackController@showFeedbackForm')->name('showFeedbackPage');
+
+    Route::post('', 'FeedbackController@postingFeedbackData')->name('postingFeedbackPage');
+
+});
+
+
+
+
+
+
 
 Route::get('/one', function () {
     return view('layouts.secondary',[

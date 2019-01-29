@@ -22,23 +22,18 @@
                     <li class="dropdown">
                         <a href="one" class="dropdown-toggle" data-toggle="dropdown">Пост</a>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Тест</a>
-                        <ul class="navigation__dropdown">
-                            <li><a href="#">Пункт 1</a></li>
-                            <li><a href="#">Пункт 2</a></li>
-                            <li><a href="#">Пункт 3</a></li>
-                            <li><a href="#">Пункт 4</a></li>
-                        </ul>
-                    </li>
-                    <li class="">
-                        <a href="elements.html" class="dropdown-toggle" data-toggle="dropdown">Верстка</a>
-                    </li>
                     <li class="">
                         <a href="about-me" class="dropdown-toggle" data-toggle="dropdown">Обо мне</a>
                     </li>
                     <li class="">
-                        <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown">Обратная связь</a>
+                        <a href="feedback" class="dropdown-toggle" data-toggle="dropdown">Обратная связь</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">Авторизация</a>
+                        <ul class="navigation__dropdown">
+                            <li><a href="#">Вход</a></li>
+                            <li><a href="#">Регистрация</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
