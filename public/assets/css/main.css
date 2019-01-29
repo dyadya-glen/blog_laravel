@@ -1932,6 +1932,10 @@ textarea.form-control {
     padding-top: 7px
 }
 
+.form-horizontal .checkbox {
+    text-align: left;
+}
+
 .form-horizontal .form-group {
     margin-left: -15px;
     margin-right: -15px
@@ -6983,4 +6987,10 @@ body {
     padding: 10px 0 15px;
     border-bottom: 1px solid #ccc;
     font-size: 14px;
+}
+
+.widget-auth-form, .widget-register-form {
+    margin: 100px 0;
+    text-align: center;
+    overflow: hidden;
 }

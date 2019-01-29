@@ -2,7 +2,7 @@
     <div class="container">
         <div class="logo pull-left">
             <a href="/">
-                <img src="assets/images/logo.png" alt="Logo" width="352" height="140">
+                <img src="/assets/images/logo.png" alt="Logo" width="352" height="140">
             </a>
         </div>
         <div class="navbar-header">
@@ -20,19 +20,19 @@
                         <a href="/" class="dropdown-toggle" data-toggle="dropdown">Главная</a>
                     </li>
                     <li class="dropdown">
-                        <a href="one" class="dropdown-toggle" data-toggle="dropdown">Пост</a>
+                        <a href="/one" class="dropdown-toggle" data-toggle="dropdown">Пост</a>
                     </li>
                     <li class="">
-                        <a href="about-me" class="dropdown-toggle" data-toggle="dropdown">Обо мне</a>
+                        <a href="/about-me" class="dropdown-toggle" data-toggle="dropdown">Обо мне</a>
                     </li>
                     <li class="">
-                        <a href="feedback" class="dropdown-toggle" data-toggle="dropdown">Обратная связь</a>
+                        <a href="/feedback" class="dropdown-toggle" data-toggle="dropdown">Обратная связь</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">Авторизация</a>
                         <ul class="navigation__dropdown">
-                            <li><a href="#">Вход</a></li>
-                            <li><a href="#">Регистрация</a></li>
+                            <li><a href="/auth/signin">Вход</a></li>
+                            <li><a href="/auth/signup">Регистрация</a></li>
                         </ul>
                     </li>
                 </ul>

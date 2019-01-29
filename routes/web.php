@@ -28,6 +28,20 @@ Route::group(['prefix' => 'feedback'], function () {
 
 });
 
+Route::group(['prefix' => 'auth'], function () {
+
+    Route::get('signin', 'AuthController@showSignInForm')->name('showSignInPage');
+
+    Route::post('signin', 'AuthController@postingSignInData')->name('postingSignInPage');
+
+
+
+    Route::get('signup', 'AuthController@showSignUpForm')->name('showSignUpPage');
+
+    Route::post('signup', 'AuthController@postingSignUpData')->name('postingSignUpPage');
+
+});
+
 
 
 

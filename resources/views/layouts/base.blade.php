@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     {{--<base href="{{ route('site.main.index') }}">--}}
-    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="shortcut icon" href="/assets/images/favicon.png">
     {{--<title>{{ $title ?? $titleDefault }}</title>--}}
     <title>{{ $title ?? "Моя страница" }}</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,400italic|Roboto:400,700,500|Open+Sans:400,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/css/main.css?1" />
+    <link rel="stylesheet" href="/assets/css/main.css?1" />
     @section('hed_styles')
     @show
 
@@ -39,7 +39,7 @@
 @show
 
 @section('bottom_scripts')
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 @show
 
 @section('app_scripts')
