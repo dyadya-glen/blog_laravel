@@ -93,4 +93,12 @@ class TestController extends Controller
             'text' => $text,
             ]);
     }
+
+    public function page (Request $request, $id = null)
+    {
+        if ($request->filled($id)){
+            return '<a href="/page/12">link</a>';
+        }
+        return 'ID: ' . $id;
+    }
 }
