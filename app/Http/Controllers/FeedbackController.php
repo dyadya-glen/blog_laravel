@@ -21,21 +21,21 @@ class FeedbackController extends Controller
         $email = $request->input('email');
         $message = $request->input('message');
 
-        if (empty($name)) {
+        if ($request->filled($name)) {
             $errors[] = 'Поле Имя обязательно для заполнения!';
         }
         elseif (mb_strlen($name) < 2) {
             $errors[] = 'Поле Имя должно быть не менее двух символов!';
         }
 
-        if (empty($email)) {
+        if ($request->filled($email)) {
             $errors[] = 'Поле Email обязательно для заполнения!';
         }
         elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Поле "адрес e-mail" должно быть действительным электронным адресом.';
         }
 
-        if (empty($message)) {
+        if ($request->filled($message)) {
             $errors[] = 'Текстовое поле обязательно для заполнения!';
         }
         elseif (mb_strlen($message) < 10) {

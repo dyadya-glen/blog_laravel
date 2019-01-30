@@ -24,14 +24,14 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        if (empty($email)) {
+        if ($request->filled($email)) {
             $errors[] = 'Поле Email обязательно для заполнения!';
         }
         elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Поле "адрес e-mail" должно быть действительным электронным адресом.';
         }
 
-        if (empty($password)) {
+        if ($request->filled($password)) {
             $errors[] = 'Поле Пароль обязательно для заполнения!';
         }
         elseif (mb_strlen($password) < 5) {
@@ -71,21 +71,21 @@ class AuthController extends Controller
         $name = $request->input('name');
         $phone = $request->input('phone');
 
-        if (empty($email)) {
+        if ($request->filled($email)) {
             $errors[] = 'Поле Email обязательно для заполнения!';
         }
         elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Поле "адрес e-mail" должно быть действительным электронным адресом.';
         }
 
-        if (empty($password)) {
+        if ($request->filled($password)) {
             $errors[] = 'Поле Пароль обязательно для заполнения!';
         }
         elseif (mb_strlen($password) < 5) {
             $errors[] = 'Поле Пароль должно быть не менее пяти символов!';
         }
 
-        if (empty($password)) {
+        if ($request->filled($password)) {
             $errors[] = 'Поле Подтверждение обязательно для заполнения!';
         }
         elseif ($passwordConfirm !== $password) {
