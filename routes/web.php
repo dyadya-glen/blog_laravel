@@ -43,17 +43,17 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'post'], function () {
-    Route::get('/creation', 'PostController@creationOfPost');
+    Route::get('/creation', 'PostController@showCreationOfPost');
 
     Route::post('/creation', 'PostController@creationOfPost');
 
     Route::get('/{id}', 'PostController@postEditing')
         ->where('id', '[0-9]+');
 
-    Route::post('/{id}', 'PostController@postEditing')
+    Route::post('/{id}', 'PostController@showPostEditing')
         ->where('id', '[0-9]+');
 
-    Route::get('/{id}', 'PostController@postDeletion')
+    Route::post('/{id}', 'PostController@postDeletion')
         ->where('id', '[0-9]+');
 
     Route::get('/{slug}', 'PostController@postBySlug')

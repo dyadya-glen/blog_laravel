@@ -15,7 +15,19 @@ class PostController extends Controller
 
     }
 
+
+    public function showCreationOfPost()
+    {
+
+    }
+
     public function creationOfPost()
+    {
+
+    }
+
+
+    public function showPostEditing($id)
     {
 
     }
@@ -24,6 +36,7 @@ class PostController extends Controller
     {
 
     }
+
 
     public function postDeletion($id)
     {
