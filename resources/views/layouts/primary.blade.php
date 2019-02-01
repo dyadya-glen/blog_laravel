@@ -1,9 +1,7 @@
 @extends('layouts.two-column')
-
 @section('left-column')
     @include($page)
 @endsection
-
 @section('right-column')
     @include('widgets.author')
     <div class="sidebar  boxed  push-down-30">

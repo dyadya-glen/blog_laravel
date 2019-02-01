@@ -20,6 +20,11 @@ Route::get('/about-me', function () {
     ]);
 });
 
+
+Route::get('/search-results', 'SearchController@searchShow')
+    ->name('showSearchPage');
+
+
 Route::group(['prefix' => 'feedback'], function () {
 
     Route::get('', 'FeedbackController@showFeedbackForm')->name('showFeedbackPage');
@@ -27,6 +32,7 @@ Route::group(['prefix' => 'feedback'], function () {
     Route::post('', 'FeedbackController@postingFeedbackData')->name('postingFeedbackPage');
 
 });
+
 
 Route::group(['prefix' => 'auth'], function () {
 
@@ -41,6 +47,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', 'AuthController@postingSignUpData')->name('postingSignUpPage');
 
 });
+
 
 Route::group(['prefix' => 'post'], function () {
     Route::get('/creation', 'PostController@showCreationOfPost');
@@ -59,11 +66,9 @@ Route::group(['prefix' => 'post'], function () {
     Route::get('/{slug}', 'PostController@postBySlug')
         ->where('slug', '[\:0-9A-Za-z\-]+');
 
-    Route::get('/tag/{tag}', 'PostController@listByTag')
-        ->where('tag', '.+');
+    Route::get('/tag/{tag}', 'PostController@listByTag');
 
-    Route::get('/section/{section}', 'PostController@listBySection')
-        ->where('section', '.+');
+    Route::get('/section/{section}', 'PostController@listBySection');
 });
 
 
@@ -74,28 +79,4 @@ Route::get('/one', function () {
     ]);
 });
 
-//Route::get('/article/{id?}','TestController@article')
-//    ->where('id', '[0-9]+')
-//    ->name('articleRoute');
-//
-//Route::get('/sign-in','TestController@showLoginForm')->name('loginRoute');
-//
-//Route::post('/sign-in','TestController@postingLoginData')->name('loginRoutePost');
-//
-//Route::get('/sign-up','TestController@showSignUpForm')->name('signUpRoute');
-//
-//Route::post('/sign-up','TestController@showSignUpData')->name('signUpRoutePost');
-//
-//Route::get('/article-add','TestController@showArticleAddForm')->name('ArticleAddRoute');
-//
-//Route::post('/article-add','TestController@showArticleAddData')->name('ArticleAddRoutePost');
-////Route::view('/article-add','article-add');
-//
-//Route::get('/about-me/user','TestController@data');
-//
-//
-//Route::put('/testput', function () {
-//    return 'PUT!!!';
-//});
-//Route::get('/page','TestController@pageLink');
-Route::get('/page/{id?}','TestController@page');
+//Route::get('/page/{id?}','TestController@page');
