@@ -12,7 +12,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4">
                                 <div class="meta__comments">
-                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; 10 мая 2015 г.</span>
+                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; {{ $date ?? ''}}</span>
                                 </div>
                             </div>
                         </div>
