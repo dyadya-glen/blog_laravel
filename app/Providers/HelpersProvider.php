@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use App\Custom\Helper;
 use Illuminate\Support\ServiceProvider;
 
 class HelpersProvider extends ServiceProvider
@@ -13,7 +13,7 @@ class HelpersProvider extends ServiceProvider
      */
     public function boot()
     {
-        require app_path('Custom/Helpers.php');
+        require_once app_path('Custom/Helpers.php');
     }
 
     /**
@@ -23,6 +23,12 @@ class HelpersProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('MyHelpSingle', function () {
+            return new Helper();
+        });
+
+        $this->app->bind('MyHelpBind', function () {
+            return new Helper();
+        });
     }
 }

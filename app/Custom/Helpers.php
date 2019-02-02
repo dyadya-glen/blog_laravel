@@ -3,17 +3,20 @@
  * date translation from machine to Russian
  */
 if (!function_exists('getRusDate')) {
-    function getRusDate($dateTime, $format = '%DAYWEEK%, d %MONTH%, Y H:i', $offset = 0)
+    function getRusDate($dateTime, $format = '%DAYWEEK%, d %MONTH%, Y H:i', $case = 0, $offset = 0)
     {
         //$monthArray = array('январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь');
-        $monthArray = array('января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря');
+        $monthArray = array(
+            ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'],
+            ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+        );
         $daysArray = array('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье', 'август');
 
         $timestamp = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $dateTime)->timestamp;
         $timestamp += 3600 * $offset;
 
         $findArray = array('/%MONTH%/i', '/%DAYWEEK%/i');
-        $replaceArray = array($monthArray[date("m", $timestamp) - 1], $daysArray[date("N", $timestamp) - 1]);
+        $replaceArray = array($monthArray[$case][date("m", $timestamp) - 1], $daysArray[date("N", $timestamp) - 1]);
 
         $format = preg_replace($findArray, $replaceArray, $format);
 
