@@ -13,6 +13,7 @@
                     @endforelse
                 </div>
                 <form  method="POST">
+                    @csrf
                     <div class="row">
                         <div class="col-xs-6">
                             <input type="text" name="name" value="{{ $name ?? '' }}" placeholder="Имя или что там у вас? *">

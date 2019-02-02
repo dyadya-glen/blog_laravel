@@ -7,14 +7,13 @@
 @endsection
 @section('content')
     <div class="container">
+        @yield('top-content')
         <div class="row">
             <div class="col-xs-12  col-md-8">
-                @section('left-column')
-                @show
+                @yield('left-column')
             </div>
             <div class="col-xs-12  col-md-4">
-                @section('right-column')
-                @show
+                @yield('right-column')
             </div>
         </div>
     </div>

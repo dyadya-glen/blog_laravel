@@ -12,7 +12,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4">
                                 <div class="meta__comments">
-                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; 10 мая 2015 г.</span>
+                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; {{ $date }} г.</span>
                                 </div>
                             </div>
                         </div>
@@ -24,9 +24,9 @@
             <div class="col-xs-10  col-xs-offset-1">
                 <div class="post-content--front-page">
                     <h2 class="front-page-title">
-                        <a href="post.html">Основной заголовок поста c картинкой</a>
+                        <a href="post.html">Основной заголовок поста c картинкой {{ $word ?? '' }}</a>
                     </h2>
-                    <h3>Подзаголовок поста</h3>
+                    <h3>Подзаголовок поста - {{ $word2 ?? '' }}</h3>
                     <p>
                         Высшая арифметика, исключая очевидный случай, позитивно соответствует стремящийся ротор векторного поля, как и предполагалось. Длина вектора вырождена. Постоянная величина транслирует коллинеарный детерминант. Теорема, очевидно, развивает комплексный полином. Матожидание, в первом приближении, традиционно проецирует аксиоматичный график функции.
                     </p>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4">
                                 <div class="meta__comments">
-                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; 10 мая 2015 г.</span>
+                                    <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; {{ $date2 }} г.</span>
                                 </div>
                             </div>
                         </div>

@@ -12,6 +12,7 @@
                     @endforelse
                 </div>
                 <form  method="POST" class="form-horizontal">
+                    @csrf
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Адрес e-mail <span class="req-field">*</span></label>
                         <div class="col-sm-8">
