@@ -2,6 +2,19 @@
     <div class="widget-author widget-register-form boxed">
         <div class="row">
             <div class="col-xs-10  col-xs-offset-1">
+                @if (Session::get('success'))
+                <div class="contact">
+                    <h3>Завершение регистрации</h3>
+                    <p class="contact__text">Для завершения регистрации, мы выслали на указанный вами e-mail адрес письмо. <strong>Если вы не обнаружите письмо, проверте вкладку СПАМ вашего e-mail, возможно оно попало туда!</strong></p>
+                    <a href="/">На главную</a>
+                </div>
+                @elseif(Session::get('access'))
+                <div class="contact">
+                    <h3>Ошибка базы данных!</h3>
+                    <p class="contact__text">Произошёл технический сбой! <strong>Приносим свои извинения!!!</strong></p>
+                    <a href="/auth/signup">Повторить попытку регистрации.</a>
+                </div>
+                @else
                 <h2>Регистрация</h2>
                 <p>Поля, отмеченные *, являются обязательными для заполнения.</p>
                 <form  method="POST" class="form-horizontal">
@@ -84,14 +97,7 @@
                         Уже зарегистрированы? <a href="/auth/signin" style="cursor: pointer">Войти</a>
                     </div>
                 </form>
-
-                {{--@else--}}
-                {{--<div class="contact">--}}
-                {{--<h3>Завершение регистрации</h3>--}}
-                {{--<p class="contact__text">Для завершения регистрации, мы выслали на указанный вами e-mail адрес письмо. <strong>Если вы не обнаружите письмо, проверте вкладку СПАМ вашего e-mail, возможно оно попало туда!</strong></p>--}}
-                {{--<a href="/">На главную</a>--}}
-                {{--</div>--}}
-                {{--@endif--}}
+                @endif
             </div>
         </div>
     </div>

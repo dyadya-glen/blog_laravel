@@ -4,26 +4,34 @@
             <div class="col-xs-10  col-xs-offset-1">
                 <h2>Авторизация</h2>
                 <p>Для продолжения необходимо ввести логин и пароль</p>
-                <div class="error" style="color: red; font-size: 18px;">
-                    @forelse($errors as $error)
-                        <p style="font-size: 14px; color: red">{{ $error }}</p>
-                    @empty
-
-                    @endforelse
-                </div>
                 <form  method="POST" class="form-horizontal">
                     @csrf
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Адрес e-mail <span class="req-field">*</span></label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="email" placeholder="user@domain.ru" value="{{ $email ?? '' }}">
-                        </div>
+                    @if ($errors->has('email'))
+                    <div class="form-group text-left has-error">
+                        <label class="control-label">{{ $errors->first('email') }} </label>
+                    @elseif(Session::get('message-email'))
+                    <div class="form-group text-left has-error">
+                        <label class="control-label">{{ Session::get('message-email') }} </label>
+                    @else
+                    <div class="form-group text-left">
+                        <label class="control-label">Адрес e-mail <span class="req-field">*</span></label>
+                    @endif
+                        <input type="text" class="form-control" name="email" placeholder="user@domain.ru" value="{{ old('email', '') }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Ваш пароль <span class="req-field">*</span></label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" name="password" value="" placeholder="Придумайте пароль">
-                        </div>
+
+
+                    @if ($errors->has('password'))
+                    <div class="form-group text-left has-error">
+                        <label class="control-label">{{ $errors->first('password') }}</label>
+                    @elseif(Session::get('message-password'))
+                    <div class="form-group text-left has-error">
+                        <label class="control-label">{{ Session::get('message-password') }}</label>
+                    @else
+                    <div class="form-group text-left">
+                        <label class="control-label">Ваш пароль <span class="req-field">*</span></label>
+                    @endif
+                        <input type="password" class="form-control" name="password" value="" placeholder="Введите пароль">
+
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
