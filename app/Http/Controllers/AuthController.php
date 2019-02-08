@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\SignInRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -18,36 +22,50 @@ class AuthController extends Controller
         ]);
     }
 
-    public function postingSignInData(Request $request)
+    public function postingSignInData(SignInRequest $request)
     {
-        $errors = [];
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        if ($request->filled($email)) {
-            $errors[] = 'Поле Email обязательно для заполнения!';
-        }
-        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Поле "адрес e-mail" должно быть действительным электронным адресом.';
-        }
-
-        if ($request->filled($password)) {
-            $errors[] = 'Поле Пароль обязательно для заполнения!';
-        }
-        elseif (mb_strlen($password) < 5) {
-            $errors[] = 'Поле Пароль должно быть не менее пяти символов!';
-        }
-
-        if (count($errors) === 0) {
-            return redirect()->route('homePage');
-        }
-
-        return view('layouts.secondary',[
-            'page' => 'pages.sign-in',
-            'title' => 'Вход',
-            'errors' => $errors,
-            'email' => $email,
+/*
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|min:6|max:32',
         ]);
+*/
+/*
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:6|max:32'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+*/
+        try {
+            $authEmail = DB::table('users')
+                ->where('email', '=', $request->input('email'))
+                ->first(['email','password']);
+        } catch (\Exception $e) {
+            $authEmail = false;
+        }
+
+        if (!$authEmail) {
+            return redirect()
+                ->back()
+                ->with('message-email', 'Введён неверный E-mail!')
+                ->withInput();
+        }
+
+        if (!password_verify($request->input('password'),$authEmail->password)) {
+            return redirect()
+                ->back()
+                ->with('message-password', 'Введён неверный пароль!')
+                ->withInput();
+        }
+
+        return redirect('/');
     }
 
     /**
@@ -58,49 +76,33 @@ class AuthController extends Controller
     {
         return view('layouts.secondary',[
             'page' => 'pages.sign-up',
-            'title' => 'Регистрация'
+            'title' => 'Регистрация',
         ]);
     }
 
-    public function postingSignUpData(Request $request)
+    public function postingSignUpData(RegisterRequest $request)
     {
-        $errors = [];
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $passwordConfirm = $request->input('password_confirm');
-        $name = $request->input('name');
-        $phone = $request->input('phone');
-
-        if ($request->filled($email)) {
-            $errors[] = 'Поле Email обязательно для заполнения!';
-        }
-        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Поле "адрес e-mail" должно быть действительным электронным адресом.';
-        }
-
-        if ($request->filled($password)) {
-            $errors[] = 'Поле Пароль обязательно для заполнения!';
-        }
-        elseif (mb_strlen($password) < 5) {
-            $errors[] = 'Поле Пароль должно быть не менее пяти символов!';
+        try{
+            $createdData = DB::table('users')->insert([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => password_hash($request->input('password'), PASSWORD_ARGON2I),
+                'phone' => preg_replace('![^0-9]+!', '', $request->input('phone')),
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s"),
+            ]);
+        } catch (\Exception $e ){
+            $createdData = false;
         }
 
-        if ($request->filled($password)) {
-            $errors[] = 'Поле Подтверждение обязательно для заполнения!';
-        }
-        elseif ($passwordConfirm !== $password) {
-            $errors[] = 'Поля Пароль и Подтверждение не совпадают';
+        if (!$createdData) {
+            return redirect()
+                ->back()
+                ->with('access', 'NO');
         }
 
-        return view('layouts.secondary',[
-            'page' => 'pages.sign-up',
-            'title' => 'Регистрация',
-            'errors' => $errors,
-            'email' => $email,
-//            'password' => $password,
-//            'passwordConfirm' => $passwordConfirm,
-            'name' => $name,
-            'phone' => $phone
-        ]);
+        return redirect()
+            ->back()
+            ->with('success', 'YES');
     }
 }

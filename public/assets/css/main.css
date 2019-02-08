@@ -1712,6 +1712,19 @@ output {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
 }
 
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.form-control.is-invalid::placeholder {
+    color: #dc3545;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    position: absolute;
+}
+
 .form-control:focus {
     border-color: #66afe9;
     outline: 0;
