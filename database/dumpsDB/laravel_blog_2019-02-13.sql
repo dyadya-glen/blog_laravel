@@ -7,7 +7,7 @@
 #
 # Адрес: localhost (MySQL 5.7.23)
 # Схема: laravel_blog
-# Время создания: 2019-02-08 11:02:29 +0000
+# Время создания: 2019-02-13 16:37:03 +0000
 # ************************************************************
 
 
@@ -31,11 +31,24 @@ CREATE TABLE `menus` (
   `name` varchar(32) NOT NULL,
   `url` varchar(255) NOT NULL DEFAULT '#',
   `sort_order` tinyint(4) NOT NULL DEFAULT '0',
-  `live` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `menus_parent_id_index` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `menus` WRITE;
+/*!40000 ALTER TABLE `menus` DISABLE KEYS */;
+
+INSERT INTO `menus` (`id`, `parent_id`, `name`, `url`, `sort_order`)
+VALUES
+	(1,NULL,'Главная','/',90),
+	(2,NULL,'Обо мне','/about-me',91),
+	(3,NULL,'Обратная связь','/feedback',92),
+	(4,NULL,'Авторизация','#',93),
+	(5,4,'Вход','/auth/signin',99),
+	(6,4,'Регистрация','/auth/signup',100);
+
+/*!40000 ALTER TABLE `menus` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Дамп таблицы users
