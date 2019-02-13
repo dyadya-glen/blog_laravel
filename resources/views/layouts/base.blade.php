@@ -37,12 +37,11 @@
 
             $('.navigation li').each(function () {
                 var link = $(this).find('a').attr('href');
-                console.log(link.split('/').length);
                 if(link === currentUrl){
-                    if(link.split('/').length >= 3){
-                        $(this).parent().parent().addClass('active');
-                    } else {
+                    if(link.split('/').length < 3){
                         $(this).addClass('active');
+                    } else {
+                        $(this).parents().filter('li').addClass('active');
                     }
                 }
             });
