@@ -15,6 +15,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+    {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--}}
     @yield('head_scripts')
 </head>
 <body>
@@ -25,6 +26,28 @@
     @yield('footer_copyright')
     @section('bottom_scripts')
     <script src="assets/js/main.js"></script>
+    <script>
+        $(function () {
+            var currentUrl = '';
+            if ('{{ request()->path() }}' === '/') {
+                currentUrl = '{{ request()->path() }}';
+            } else {
+                currentUrl = '/' + '{{ request()->path() }}';
+            }
+
+            $('.navigation li').each(function () {
+                var link = $(this).find('a').attr('href');
+                console.log(link.split('/').length);
+                if(link === currentUrl){
+                    if(link.split('/').length >= 3){
+                        $(this).parent().parent().addClass('active');
+                    } else {
+                        $(this).addClass('active');
+                    }
+                }
+            });
+        });
+    </script>
     @show
     @yield('app_scripts')
 </body>

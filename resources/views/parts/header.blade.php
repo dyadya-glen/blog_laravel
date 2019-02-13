@@ -16,25 +16,7 @@
             <nav class="navbar navbar-default" role="navigation">
                 <div class="collapse  navbar-collapse" id="readable-navbar-collapse">
                     <ul class="navigation">
-                        <li class="dropdown active">
-                            <a href="/" class="dropdown-toggle" data-toggle="dropdown">Главная</a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="/one" class="dropdown-toggle" data-toggle="dropdown">Пост</a>
-                        </li>
-                        <li class="">
-                            <a href="/about-me" class="dropdown-toggle" data-toggle="dropdown">Обо мне</a>
-                        </li>
-                        <li class="">
-                            <a href="/feedback" class="dropdown-toggle" data-toggle="dropdown">Обратная связь</a>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown">Авторизация</a>
-                            <ul class="navigation__dropdown">
-                                <li><a href="/auth/signin">Вход</a></li>
-                                <li><a href="/auth/signup">Регистрация</a></li>
-                            </ul>
-                        </li>
+                        {!! $mainMenu ?? '' !!}
                     </ul>
                 </div>
             </nav>
