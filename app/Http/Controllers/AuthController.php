@@ -1,12 +1,9 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\SignInRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Profile;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -24,44 +21,20 @@ class AuthController extends Controller
 
     public function postingSignInData(SignInRequest $request)
     {
-/*
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required|min:6|max:32',
-        ]);
-*/
-/*
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|min:6|max:32'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-*/
         try {
-            $authEmail = DB::table('users')
-                ->where('email', '=', $request->input('email'))
-                ->first(['email','password']);
-        } catch (\Exception $e) {
+            $authEmail = User::where('email', '=', $request->input('email'))
+                ->first(['email', 'password']);
+            $authPassword = password_verify($request->input('password'),$authEmail->password);
+        }  catch (\Exception $e) {
             $authEmail = false;
+            $authPassword = false;
         }
 
-        if (!$authEmail) {
-            return redirect()
-                ->back()
-                ->with('message-email', 'Введён неверный E-mail!')
-                ->withInput();
-        }
 
-        if (!password_verify($request->input('password'),$authEmail->password)) {
+        if (!$authEmail || !$authPassword) {
             return redirect()
                 ->back()
-                ->with('message-password', 'Введён неверный пароль!')
+                ->with('message-email', 'Пароль или E-mail введён неверно!')
                 ->withInput();
         }
 
@@ -82,20 +55,50 @@ class AuthController extends Controller
 
     public function postingSignUpData(RegisterRequest $request)
     {
-        try{
-            $createdData = DB::table('users')->insert([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'password' => password_hash($request->input('password'), PASSWORD_ARGON2I),
-                'phone' => preg_replace('![^0-9]+!', '', $request->input('phone')),
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s"),
-            ]);
+        /*try{
+            $user = new User();
+            $user->email = $request->input('email');
+            $user->password = password_hash($request->input('password'), PASSWORD_ARGON2I);
+            $user->remember_token = md5($request->input('email'));
+            $user->save();
+
+            $profile = new Profile();
+            $profile->name = $request->input('name');
+            $profile->phone = preg_replace('![^0-9]+!', '', $request->input('phone'));
+            $profile->user_id = DB::getPdo()->lastInsertId();
+            $profile->save();
         } catch (\Exception $e ){
-            $createdData = false;
+            $user = false;
+            $profile = false;
         }
 
-        if (!$createdData) {
+        if (!$user || !$profile) {
+            return redirect()
+                ->back()
+                ->with('access', 'NO');
+        }
+
+        return redirect()
+            ->back()
+            ->with('success', 'YES');*/
+        try{
+            $userAdd = User::create([
+                'email' => $request->input('email'),
+                'password' => password_hash($request->input('password'), PASSWORD_ARGON2I),
+                'remember_token' => md5($request->input('email')),
+            ]);
+
+            $profileAdd = Profile::create([
+                'name' => $request->input('name'),
+                'phone' => preg_replace('![^0-9]+!', '', $request->input('phone')),
+                'user_id' => $userAdd->id,
+            ]);
+         } catch (\Exception $e ){
+            $profileAdd = false;
+            $userAdd = false;
+        }
+
+        if (!$userAdd || !$profileAdd) {
             return redirect()
                 ->back()
                 ->with('access', 'NO');
