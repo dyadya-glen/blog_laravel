@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 //use App\Custom\Helper;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class MainController extends Controller
 {
     public function index()
     {
+        $posts = Post::all();
+//        foreach ($posts as $post){
+//            dump($post->image);
+//
+//        }
         $date = getRusDate('2018-06-25 00:00:00', 'd %MONTH% Y');
 
         $helpSingle = resolve('MyHelpSingle');
@@ -20,10 +26,11 @@ class MainController extends Controller
         return view('layouts.primary',[
             'page' => 'pages.main',
             'title' => 'Главная',
-            'date' => $date,
-            'date2' => $date2,
-            'word' => $word,
-            'word2' => $word2
+            'date' => $helpSingle,
+//            'date2' => $date2,
+//            'word' => $word,
+//            'word2' => $word2
+            'posts' => $posts,
         ]);
     }
 }

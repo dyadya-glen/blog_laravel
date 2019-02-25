@@ -8,7 +8,7 @@ class MainMenu
 {
     private function getCategories()
     {
-        return DB::table('menus')
+        return DB::table('menu')
             ->whereNull('parent_id')
             ->orderBy('sort_order')
             ->get(['id', 'name', 'url']);
@@ -16,7 +16,7 @@ class MainMenu
 
     private function getItems($parent_id)
     {
-        return DB::table('menus')
+        return DB::table('menu')
             ->whereNotNull('parent_id')
             ->where('parent_id', $parent_id)
             ->orderBy('sort_order')
