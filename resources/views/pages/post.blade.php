@@ -37,7 +37,7 @@
                     {{ $text }}
                 </p>
 
-
+            </div>
             <div class="row">
                 <div class="col-xs-12  col-sm-6">
 
@@ -61,9 +61,10 @@
                     <div class="tags">
                         <h6>Тэги</h6>
                         <hr>
-                        @foreach($tegsArr as $teg)
-                        <a href="#" class="tags__link">{{ $teg }}</a>
-                        @endforeach
+                        @forelse($tagsArr as $tag)
+                        <a href="/post/tag/{{ $tag }}" class="tags__link">{{ $tag }}</a>
+                        @empty
+                        @endforelse
                     </div>
                 </div>
             </div>

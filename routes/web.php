@@ -68,7 +68,7 @@ Route::group(['prefix' => 'post'], function () {
 
     Route::get('/tag/{tag}', 'PostController@listByTag');
 
-    Route::get('/section/{section}', 'PostController@listBySection');
+    Route::get('/category/{category}', 'PostController@listByCategory');
 });
 
 

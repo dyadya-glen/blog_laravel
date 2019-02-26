@@ -42,6 +42,11 @@
                     </div>
 
                     <div class="form-group  text-left">
+                        <label class="control-label">Выбор раздела </label>
+                        <textarea class="form-control"  rows="6" type="text" name="categories" placeholder="Раздел">{{ old('categories', '') }}</textarea>
+                    </div>
+
+                    <div class="form-group  text-left">
                         <label class="control-label">Ваши теги </label>
                         <textarea class="form-control"  rows="6" type="text" name="tagline" placeholder="тег">{{ old('tagline', '') }}</textarea>
                     </div>
