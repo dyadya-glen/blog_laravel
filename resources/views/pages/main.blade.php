@@ -68,7 +68,7 @@
                 <div class="post-content--front-page">
                     <h2 class="front-page-title">Пока нет ни одной статьи</h2>
                 </div>
-                <a href="post.html">
+                <a href="/">
                     <div class="read-more">
                         Читать далее <span class="glyphicon glyphicon-chevron-right"></span>
                     </div>

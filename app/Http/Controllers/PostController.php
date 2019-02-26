@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Http\Requests\PostCreationRequest;
 
@@ -17,7 +18,10 @@ class PostController extends Controller
     {
         $post = Post::where('slug', $slug)
             ->first();
-        $tegsArr = explode(', ', $post->tagline);
+        $tagName = [];
+        foreach ($post->tags as $tag){
+            $tagName[] = $tag->name;
+        }
         $helpSingle = resolve('MyHelpSingle');
 
         return view('layouts.secondary',[
@@ -25,8 +29,7 @@ class PostController extends Controller
             'title' => $post->title,
             'text' => $post->fulltext,
             'image' => $post->image,
-            'tagline' => $post->tagline,
-            'tegsArr' => $tegsArr,
+            'tagsArr' => $tagName,
             'date' => $helpSingle->getRusDate($post->created_at, 'd %MONTH% Y', 'g'),
         ]);
     }
@@ -44,15 +47,29 @@ class PostController extends Controller
     {
         $tagsStr = $request->input('tagline');
         $tags = explode("\r\n", $tagsStr);
-        $tagsNameStr = '';
+        $tags = array_diff($tags, array('', null));
+        $tagsId = [];
+
         foreach ($tags as $tag) {
             if(!Tag::where('name', $tag)->first()) {
                 Tag::create(['name' => $tag]);
             }
-            $tagsNameStr .= $tag . ', ';
+            $tagsId[] = Tag::where('name', $tag)->first()->id;
         }
 
-        $tagline = rtrim($tagsNameStr, ', ');
+
+        $categoriesStr = $request->input('categories');
+        $categories = explode("\r\n", $categoriesStr);
+        $categories = array_diff($categories, array('', null));
+        $categoriesId = [];
+
+        foreach ($categories as $category) {
+            if(!Category::where('name', $category)->first()) {
+                Category::create(['name' => $category]);
+            }
+            $categoriesId[] = Category::where('name', $category)->first()->id;
+        }
+
         $slug = Str::slug($request->input('title'));
 
         try{
@@ -61,13 +78,14 @@ class PostController extends Controller
                 'image' => $request->input('image'),
                 'title' => $request->input('title'),
                 'slug' => '',
-                'tagline' => $tagline,
                 'announce' => $request->input('announce'),
                 'fulltext' => $request->input('fulltext'),
             ]);
 
             $postAdd->slug = $postAdd->id . ':' . $slug;
             $postAdd->save();
+            $postAdd->tags()->sync($tagsId);
+            $postAdd->categories()->sync($categoriesId);
 
         } catch (\Exception $e ){
             $postAdd = false;
@@ -103,12 +121,33 @@ class PostController extends Controller
 
     public function listByTag($tag)
     {
+        $postByTag = Tag::where('name', $tag)
+            ->first()
+            ->posts;
+        $helpSingle = resolve('MyHelpSingle');
 
+        return view('layouts.primary',[
+            'page' => 'pages.main',
+            'title' => 'Главная',
+            'date' => $helpSingle,
+            'posts' => $postByTag,
+        ]);
     }
 
     public function listByCategory($category)
     {
+        $postByCategory = Category::where('name', $category)
+            ->first()
+            ->posts;
 
+        $helpSingle = resolve('MyHelpSingle');
+
+        return view('layouts.primary',[
+            'page' => 'pages.main',
+            'title' => 'Главная',
+            'date' => $helpSingle,
+            'posts' => $postByCategory,
+            ]);
     }
 
 

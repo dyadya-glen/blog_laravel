@@ -11,10 +11,7 @@ class MainController extends Controller
     public function index()
     {
         $posts = Post::all();
-//        foreach ($posts as $post){
-//            dump($post->image);
-//
-//        }
+
         $date = getRusDate('2018-06-25 00:00:00', 'd %MONTH% Y');
 
         $helpSingle = resolve('MyHelpSingle');
