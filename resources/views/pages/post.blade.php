@@ -33,10 +33,7 @@
                     <a href="#">{{ $title }}</a>
                 </h1>
                 <h3>{{ $tagline ?? ''}}</h3>
-                <p>
-                    {{ $text }}
-                </p>
-
+                {!! $text !!}
             </div>
             <div class="row">
                 <div class="col-xs-12  col-sm-6">

@@ -45,9 +45,7 @@ class PostController extends Controller
 
     public function creationOfPost(PostCreationRequest $request)
     {
-        $tagsStr = $request->input('tagline');
-        $tags = explode("\r\n", $tagsStr);
-        $tags = array_diff($tags, array('', null));
+        $tags = array_filter(array_map('trim', explode("\n", $request->input('tagline'))));
         $tagsId = [];
 
         foreach ($tags as $tag) {
@@ -57,10 +55,7 @@ class PostController extends Controller
             $tagsId[] = Tag::where('name', $tag)->first()->id;
         }
 
-
-        $categoriesStr = $request->input('categories');
-        $categories = explode("\r\n", $categoriesStr);
-        $categories = array_diff($categories, array('', null));
+        $categories = array_filter(array_map('trim', explode("\n", $request->input('categories'))));
         $categoriesId = [];
 
         foreach ($categories as $category) {
