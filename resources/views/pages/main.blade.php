@@ -30,9 +30,7 @@
                         <a href="post.html">{{ $post->title }}</a>
                     </h2>
                     <h3>{{ $post->tagline }}</h3>
-                    <p>
-                        {{ $post->announce }}
-                    </p>
+                    {!! $post->announce !!}
                 </div>
                 <a href="/post/{{ $post->slug }}">
                     <div class="read-more">

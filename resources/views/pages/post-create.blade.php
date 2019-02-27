@@ -1,3 +1,4 @@
+
 <div class="col-12 col-md-8 col-offset-0 col-md-offset-2">
     <div class="widget-author widget-register-form boxed">
         <div class="row">
@@ -23,7 +24,7 @@
                     <div class="form-group text-left">
                         <label class="control-label">Анонс <span class="req-field">*</span></label>
                     @endif
-                        <textarea class="form-control"  rows="6" type="text" name="announce" placeholder="Краткое содержание">{{ old('announce', '') }}</textarea>
+                        <textarea class="form-control tinymce"  rows="6" type="text" name="announce" placeholder="Краткое содержание">{{ old('announce', '') }}</textarea>
                     </div>
 
                     @if ($errors->has('fulltext'))
@@ -33,7 +34,7 @@
                     <div class="form-group text-left">
                         <label class="control-label">Основное содержание <span class="req-field">*</span></label>
                     @endif
-                        <textarea class="form-control"  rows="6" type="text" name="fulltext" placeholder="Основное содержание">{{ old('fulltext', '') }}</textarea>
+                        <textarea class="form-control tinymce"  rows="6" type="text" name="fulltext" placeholder="Основное содержание">{{ old('fulltext', '') }}</textarea>
                     </div>
 
                     <div class="form-group text-left">
@@ -59,4 +60,24 @@
         </div>
     </div>
 </div>
-
+@section('bottom_scripts')
+    <script src="assets/js/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector:'textarea.tinymce',
+            language:"ru",
+            theme : "silver",
+            plugins:[
+                'link',
+                'image',
+                'code',
+                'media',
+                'imagetools',
+                'colorpicker'
+            ],
+            toolbar:'undo redo | bold italic underline | link image imagetools media | code | colorpicker',
+            bbcode_dialect: "punbb",
+            menubar: false
+        });
+    </script>
+@show
