@@ -45,50 +45,35 @@ class PostController extends Controller
 
     public function creationOfPost(PostCreationRequest $request)
     {
+        $postAdd = Post::create([
+            'user_id' => 1,
+            'image' => $request->input('image'),
+            'title' => $request->input('title'),
+            'slug' => 'slug',
+            'announce' => $request->input('announce'),
+            'fulltext' => $request->input('fulltext'),
+        ]);
+
         $tags = array_filter(array_map('trim', explode("\n", $request->input('tagline'))));
         $tagsId = [];
 
         foreach ($tags as $tag) {
-            if(!Tag::where('name', $tag)->first()) {
-                Tag::create(['name' => $tag]);
-            }
-            $tagsId[] = Tag::where('name', $tag)->first()->id;
+            $tagsId[] = Tag::firstOrCreate(['name' => $tag])->id;//функция проверяет наличие тега в базе и если его нет, добавляет его в базу
         }
 
         $categories = array_filter(array_map('trim', explode("\n", $request->input('categories'))));
         $categoriesId = [];
 
         foreach ($categories as $category) {
-            if(!Category::where('name', $category)->first()) {
-                Category::create(['name' => $category]);
-            }
-            $categoriesId[] = Category::where('name', $category)->first()->id;
+            $categoriesId[] = Category::firstOrCreate(['name' => $category])->id;
         }
 
         $slug = Str::slug($request->input('title'));
 
-        try{
-            $postAdd = Post::create([
-                'user_id' => 1,
-                'image' => $request->input('image'),
-                'title' => $request->input('title'),
-                'slug' => '',
-                'announce' => $request->input('announce'),
-                'fulltext' => $request->input('fulltext'),
-            ]);
-
-            $postAdd->slug = $postAdd->id . ':' . $slug;
-            $postAdd->save();
-            $postAdd->tags()->sync($tagsId);
-            $postAdd->categories()->sync($categoriesId);
-
-        } catch (\Exception $e ){
-            $postAdd = false;
-        }
-        if (!$postAdd) {
-            return redirect()
-                ->back();
-        }
+        $postAdd->slug = $postAdd->id . ':' . $slug;
+        $postAdd->save();
+        $postAdd->tags()->sync($tagsId);
+        $postAdd->categories()->sync($categoriesId);
 
         return redirect('/post/' . $postAdd->slug);
     }
@@ -96,7 +81,10 @@ class PostController extends Controller
 
     public function showPostEditing($id)
     {
-
+        return view('layouts.secondary',[
+            'page' => 'pages.post-update',
+            'title' => 'Редактирование поста',
+        ]);
     }
 
     public function postEditing($id)
@@ -119,6 +107,7 @@ class PostController extends Controller
         $postByTag = Tag::where('name', $tag)
             ->first()
             ->posts;
+
         $helpSingle = resolve('MyHelpSingle');
 
         return view('layouts.primary',[
@@ -144,6 +133,4 @@ class PostController extends Controller
             'posts' => $postByCategory,
             ]);
     }
-
-
 }

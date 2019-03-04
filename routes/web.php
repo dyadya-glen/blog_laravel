@@ -54,10 +54,10 @@ Route::group(['prefix' => 'post'], function () {
 
     Route::post('/creation', 'PostController@creationOfPost');
 
-    Route::get('/{id}', 'PostController@postEditing')
+    Route::get('/update/{id}', 'PostController@postEditing')
         ->where('id', '[0-9]+');
 
-    Route::post('/{id}', 'PostController@showPostEditing')
+    Route::post('/update/{id}', 'PostController@showPostEditing')
         ->where('id', '[0-9]+');
 
     Route::post('/{id}', 'PostController@postDeletion')
