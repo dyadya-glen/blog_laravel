@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             MenuTableSeeder::class,
+            AddUserDefault::class,
+            AddProfileDefault::class,
         ]);
     }
 }

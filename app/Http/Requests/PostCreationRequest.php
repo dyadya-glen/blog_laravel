@@ -16,13 +16,14 @@ class PostCreationRequest extends FormRequest
         return [
             'image' => 'nullable',
             //'image' => 'nullable|regex:/^(\+?\d{1,3}\s?\(\d{3}\)\s?\d{3}(-\d{2}){2})?$/',
-            //'title' => 'required|min:2|max:32',
-            'title' => 'nullable|min:2|max:32',
-            //'announce' => 'required|min:2',
-            'announce' => 'nullable|min:2',
-            //'fulltext' => 'required|min:2',
-            'fulltext' => 'nullable|min:2',
-            'tagline' => 'nullable',
+            'title' => 'required|min:2|max:32',
+            //'title' => 'nullable|min:2|max:32',
+            'announce' => 'required|min:2',
+            //'announce' => 'nullable|min:2',
+            'fulltext' => 'required|min:2',
+            //'fulltext' => 'nullable|min:2',
+            'tagline' => 'nullable|min:2',
+            'categories' => 'required|min:2'
         ];
     }
 }

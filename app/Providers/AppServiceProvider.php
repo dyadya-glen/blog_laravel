@@ -15,7 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(MainMenu $mainMenu)
     {
-        View::share('mainMenu', $mainMenu->buildMenu());
+        //View::share('mainMenu', $mainMenu->buildMenu());
+        View::share('title', 'Блог');
+        View::composer('*', function ($view) use ($mainMenu) {
+            return $view->with(['mainMenu' => $mainMenu->buildMenu()]);
+            //return $view->with('mainMenu', $mainMenu->buildMenu());
+        });
     }
 
     /**
