@@ -37,11 +37,10 @@
             </div>
             <div class="row">
                 <div class="col-xs-12  col-sm-6">
-
                     <div class="post-comments">
-                        <a class="btn  btn-primary" href="single-post-without-image.html">Комментарии (3)</a>
+                        <a class="btn  btn-primary" href="/post/update/{{ $id }}">Редактировать</a>
+                        <a class="btn  btn-primary" id="deletePost" href="/post/delete/{{ $id }}" style="margin-left: 20px">Удалить</a>
                     </div>
-
                 </div>
                 <div class="col-xs-12  col-sm-6">
 
@@ -67,6 +66,24 @@
             </div>
         </div>
     </div>
-
+    @include('parts.warning')
 </div>
+@section('bottom_scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var deleteWarning = $('.delete-warning');
 
+            $('#deletePost').on('click', function (e) {
+                e.preventDefault();
+                deleteWarning.css('display','block');
+            });
+
+            $('#cancel').on('click', function (e) {
+                e.preventDefault();
+                deleteWarning.removeAttr('style');
+            });
+        });
+
+    </script>
+@show

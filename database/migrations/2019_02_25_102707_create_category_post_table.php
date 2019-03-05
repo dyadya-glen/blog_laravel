@@ -19,7 +19,7 @@ class CreateCategoryPostTable extends Migration
 
             $table->foreign('category_id')
                 ->references('id')
-                ->on('tags')
+                ->on('categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
