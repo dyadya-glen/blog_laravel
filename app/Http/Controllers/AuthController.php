@@ -4,6 +4,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\SignInRequest;
 use App\Models\Profile;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -21,24 +22,40 @@ class AuthController extends Controller
 
     public function postingSignInData(SignInRequest $request)
     {
-        try {
-            $authEmail = User::where('email', '=', $request->input('email'))
-                ->first(['email', 'password']);
-            $authPassword = password_verify($request->input('password'),$authEmail->password);
-        }  catch (\Exception $e) {
-            $authEmail = false;
-            $authPassword = false;
-        }
+        $remember = $request->input('remember') ? true : false;
 
+       $authResult = Auth::attempt([
+           'email' => $request->input('email'),
+           'password' => $request->input('password'),
+       ], $remember);
 
-        if (!$authEmail || !$authPassword) {
-            return redirect()
+       if ($authResult){
+           return redirect('/');
+       }
+       else {
+           return redirect()
                 ->back()
                 ->with('message-email', 'Пароль или E-mail введён неверно!')
                 ->withInput();
-        }
+       }
+//        try {
+//            $authEmail = User::where('email', '=', $request->input('email'))
+//                ->first(['email', 'password']);
+//            $authPassword = password_verify($request->input('password'),$authEmail->password);
+//        }  catch (\Exception $e) {
+//            $authEmail = false;
+//            $authPassword = false;
+//        }
 
-        return redirect('/');
+
+//        if (!$authEmail || !$authPassword) {
+//            return redirect()
+//                ->back()
+//                ->with('message-email', 'Пароль или E-mail введён неверно!')
+//                ->withInput();
+//        }
+
+//        return redirect('/');
     }
 
     /**
@@ -55,32 +72,6 @@ class AuthController extends Controller
 
     public function postingSignUpData(RegisterRequest $request)
     {
-        /*try{
-            $user = new User();
-            $user->email = $request->input('email');
-            $user->password = password_hash($request->input('password'), PASSWORD_ARGON2I);
-            $user->remember_token = md5($request->input('email'));
-            $user->save();
-
-            $profile = new Profile();
-            $profile->name = $request->input('name');
-            $profile->phone = preg_replace('![^0-9]+!', '', $request->input('phone'));
-            $profile->user_id = DB::getPdo()->lastInsertId();
-            $profile->save();
-        } catch (\Exception $e ){
-            $user = false;
-            $profile = false;
-        }
-
-        if (!$user || !$profile) {
-            return redirect()
-                ->back()
-                ->with('access', 'NO');
-        }
-
-        return redirect()
-            ->back()
-            ->with('success', 'YES');*/
         try{
             $userAdd = User::create([
                 'email' => $request->input('email'),
@@ -107,5 +98,15 @@ class AuthController extends Controller
         return redirect()
             ->back()
             ->with('success', 'YES');
+    }
+
+    /**
+     * action logOut
+     */
+
+    public function logOut()
+    {
+        Auth::logout();
+        return redirect()->route('showSignInPage');
     }
 }

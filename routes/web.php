@@ -42,6 +42,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 
+    Route::get('logout', 'AuthController@logOut')->name('actionLogOut');
+
+
+
     Route::get('signup', 'AuthController@showSignUpForm')->name('showSignUpPage');
 
     Route::post('signup', 'AuthController@postingSignUpData')->name('postingSignUpPage');

@@ -9,9 +9,23 @@
                 <div class="collapse  navbar-collapse" id="readable-navbar-collapse">
                     <ul class="navigation">
                         {!! $mainMenu ?? '' !!}
+                        @unless (Auth::check())
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Авторизация</a>
+                            <ul class="navigation__dropdown">
+                                <li><a href="/auth/signin">Вход</a></li>
+                                <li><a href="/auth/signup">Регистрация</a></li>
+                            </ul>
+                        </li>
+                        @endunless
+                        @auth
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="/post/creation">Добавить пост</a>
                         </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="/auth/logout">Выйти</a>
+                        </li>
+                        @endauth
                     </ul>
 
                 </div>

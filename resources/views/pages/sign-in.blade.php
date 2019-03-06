@@ -37,7 +37,7 @@
                         <div class="col-sm-offset-4 col-sm-8">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="is_confirmed"><span class="text-no-error">Запомнить меня</span></label>
+                                    <input type="checkbox" name="remember"><span class="text-no-error">Запомнить меня</span></label>
                             </div>
                         </div>
                     </div>

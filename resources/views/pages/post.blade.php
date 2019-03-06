@@ -36,12 +36,14 @@
                 {!! $text !!}
             </div>
             <div class="row">
+                @auth
                 <div class="col-xs-12  col-sm-6">
                     <div class="post-comments">
                         <a class="btn  btn-primary" href="/post/update/{{ $id }}">Редактировать</a>
                         <a class="btn  btn-primary" id="deletePost" href="/post/delete/{{ $id }}" style="margin-left: 20px">Удалить</a>
                     </div>
                 </div>
+                @endauth
                 <div class="col-xs-12  col-sm-6">
 
                     <div class="social-icons">
