@@ -54,18 +54,21 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 Route::group(['prefix' => 'post'], function () {
-    Route::get('/creation', 'PostController@showCreationOfPost')->middleware('auth');
+    Route::get('/creation', 'PostController@showCreationOfPost')
+        ->middleware('auth');
 
     Route::post('/creation', 'PostController@creationOfPost');
 
     Route::get('/update/{id}', 'PostController@showPostEditing')
-        ->where('id', '[0-9]+')->middleware('auth');
+        ->where('id', '[0-9]+')
+        ->middleware('auth');
 
     Route::post('/update/{id}', 'PostController@postEditing')
         ->where('id', '[0-9]+');
 
     Route::get('delete/{id}', 'PostController@postDeletion')
-        ->where('id', '[0-9]+')->middleware('auth');
+        ->where('id', '[0-9]+')
+        ->middleware('auth');
 
     Route::get('/{slug}', 'PostController@postBySlug')
         ->where('slug', '[\:0-9A-Za-z\-]+');
