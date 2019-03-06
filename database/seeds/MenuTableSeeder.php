@@ -30,24 +30,24 @@ class MenuTableSeeder extends Seeder
             'sort_order' => '92',
         ]);
 
-        Menu::create([
-            'name' => 'Авторизация',
-            'url' => '#',
-            'sort_order' => '93',
-        ]);
-
-        Menu::create([
-            'parent_id' => '4',
-            'name' => 'Вход',
-            'url' => '/auth/signin',
-            'sort_order' => '99',
-        ]);
-
-        Menu::create([
-            'parent_id' => '4',
-            'name' => 'Регистрация',
-            'url' => '/auth/signup',
-            'sort_order' => '100',
-        ]);
+//        Menu::create([
+//            'name' => 'Авторизация',
+//            'url' => '#',
+//            'sort_order' => '93',
+//        ]);
+//
+//        Menu::create([
+//            'parent_id' => '4',
+//            'name' => 'Вход',
+//            'url' => '/auth/signin',
+//            'sort_order' => '99',
+//        ]);
+//
+//        Menu::create([
+//            'parent_id' => '4',
+//            'name' => 'Регистрация',
+//            'url' => '/auth/signup',
+//            'sort_order' => '100',
+//        ]);
     }
 }

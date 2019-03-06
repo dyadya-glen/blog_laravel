@@ -42,6 +42,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 
+    Route::get('logout', 'AuthController@logOut')->name('actionLogOut');
+
+
+
     Route::get('signup', 'AuthController@showSignUpForm')->name('showSignUpPage');
 
     Route::post('signup', 'AuthController@postingSignUpData')->name('postingSignUpPage');
@@ -54,13 +58,13 @@ Route::group(['prefix' => 'post'], function () {
 
     Route::post('/creation', 'PostController@creationOfPost');
 
-    Route::get('/update/{id}', 'PostController@postEditing')
+    Route::get('/update/{id}', 'PostController@showPostEditing')
         ->where('id', '[0-9]+');
 
-    Route::post('/update/{id}', 'PostController@showPostEditing')
+    Route::post('/update/{id}', 'PostController@postEditing')
         ->where('id', '[0-9]+');
 
-    Route::post('/{id}', 'PostController@postDeletion')
+    Route::get('delete/{id}', 'PostController@postDeletion')
         ->where('id', '[0-9]+');
 
     Route::get('/{slug}', 'PostController@postBySlug')

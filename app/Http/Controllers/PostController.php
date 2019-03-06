@@ -7,12 +7,25 @@ use App\Models\Tag;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Http\Requests\PostCreationRequest;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     /**
      * CRUD post
      */
+
+    private function manyToMany($str, $model, $nameСolumns)
+    {
+        $array = array_filter(array_map('trim', explode("\n", $str)));
+        $arrayId = [];
+
+        foreach ($array as $item) {
+            $arrayId[] = $model::firstOrCreate([$nameСolumns => $item])->id;
+        }
+
+        return $arrayId;
+    }
 
     public function postBySlug($slug)
     {
@@ -26,6 +39,7 @@ class PostController extends Controller
 
         return view('layouts.secondary',[
             'page' => 'pages.post',
+            'id' => $post->id,
             'title' => $post->title,
             'text' => $post->fulltext,
             'image' => $post->image,
@@ -54,25 +68,13 @@ class PostController extends Controller
             'fulltext' => $request->input('fulltext'),
         ]);
 
-        $tags = array_filter(array_map('trim', explode("\n", $request->input('tagline'))));
-        $tagsId = [];
-
-        foreach ($tags as $tag) {
-            $tagsId[] = Tag::firstOrCreate(['name' => $tag])->id;//функция проверяет наличие тега в базе и если его нет, добавляет его в базу
-        }
-
-        $categories = array_filter(array_map('trim', explode("\n", $request->input('categories'))));
-        $categoriesId = [];
-
-        foreach ($categories as $category) {
-            $categoriesId[] = Category::firstOrCreate(['name' => $category])->id;
-        }
-
-        $slug = Str::slug($request->input('title'));
-
-        $postAdd->slug = $postAdd->id . ':' . $slug;
+        $postAdd->slug = $postAdd->id . ':' . Str::slug($request->input('title'));
         $postAdd->save();
+
+        $tagsId = $this->manyToMany($request->input('tagline'), Tag::class, 'name');
         $postAdd->tags()->sync($tagsId);
+
+        $categoriesId = $this->manyToMany($request->input('categories'), Category::class, 'name');
         $postAdd->categories()->sync($categoriesId);
 
         return redirect('/post/' . $postAdd->slug);
@@ -81,21 +83,61 @@ class PostController extends Controller
 
     public function showPostEditing($id)
     {
+        $post = Post::find($id);
+
+        $categoryName = [];
+
+        foreach ($post->categories as $category){
+            $categoryName[] = $category->name;
+        }
+
+        $categories = implode("\n", $categoryName);
+
+        $tagName = [];
+
+        foreach ($post->tags as $tag){
+            $tagName[] = $tag->name;
+        }
+
+        $tags = implode("\n", $tagName);
+
         return view('layouts.secondary',[
             'page' => 'pages.post-update',
             'title' => 'Редактирование поста',
+            'titlePost' => $post->title,
+            'image' => $post->image,
+            'announce' => $post->announce,
+            'fulltext' => $post->fulltext,
+            'categories' => $categories,
+            'tags' => $tags,
         ]);
     }
 
-    public function postEditing($id)
+    public function postEditing($id, Request $request)
     {
+        $post = Post::find($id);
 
+        $post->image = $request->input('image');
+        $post->title = $request->input('title');
+        $post->slug = $post->id . ':' . Str::slug($request->input('title'));
+        $post->announce = $request->input('announce');
+        $post->fulltext = $request->input('fulltext');
+        $post->save();
+
+        $categoriesId = $this->manyToMany($request->input('categories'), Category::class, 'name');
+        $post->categories()->sync($categoriesId);
+
+        $tagsId = $this->manyToMany($request->input('tagline'), Tag::class, 'name');
+        $post->tags()->sync($tagsId);
+
+        return redirect('/post/' . $post->slug);
     }
 
 
     public function postDeletion($id)
     {
-
+        Post::find($id)->delete();
+        return redirect('/');
     }
 
     /**
