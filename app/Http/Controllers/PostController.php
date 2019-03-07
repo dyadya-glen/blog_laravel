@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Requests\PostCreationRequest;
 use Illuminate\Http\Request;
@@ -12,10 +13,23 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     /**
-     * CRUD post
+     * @param $str - words from textarea
+     * @param $model - entity model
+     * @param $nameСolumns - name of the entity table column in the database
+     * @return array - an array of identifiers of entities
+     *
+     * The function takes the words typed in the textarea,
+     *  the model of the entity,
+     *  the name of the column in the table entities in the database.
+     *
+     * Words are cleared of spaces and hyphens and collected in an array.
+     *
+     * Checks for array elements in the database table and adds those elements that are not there.
+     *
+     * Entity IDs are collected in an array and returned by the function.
      */
 
-    private function manyToMany($str, $model, $nameСolumns)
+    private function stringInIDsOfArrayElements($str, $model, $nameСolumns)
     {
         $array = array_filter(array_map('trim', explode("\n", $str)));
         $arrayId = [];
@@ -26,6 +40,10 @@ class PostController extends Controller
 
         return $arrayId;
     }
+
+    /**
+     * CRUD post
+     */
 
     public function postBySlug($slug)
     {
@@ -51,6 +69,15 @@ class PostController extends Controller
 
     public function showCreationOfPost()
     {
+//        try{
+//            $this->authorize('create');
+//        } catch (\Exception $e){
+//            return redirect()->back();
+//        }
+        //$this->authorize('create');
+        //dump(Auth::id());
+        $this->authorize('create');
+
         return view('layouts.secondary',[
             'page' => 'pages.post-create',
             'title' => 'Новый пост',
@@ -60,7 +87,7 @@ class PostController extends Controller
     public function creationOfPost(PostCreationRequest $request)
     {
         $postAdd = Post::create([
-            'user_id' => 1,
+            'user_id' => Auth::id(),
             'image' => $request->input('image'),
             'title' => $request->input('title'),
             'slug' => 'slug',
@@ -71,10 +98,10 @@ class PostController extends Controller
         $postAdd->slug = $postAdd->id . ':' . Str::slug($request->input('title'));
         $postAdd->save();
 
-        $tagsId = $this->manyToMany($request->input('tagline'), Tag::class, 'name');
+        $tagsId = $this->stringInIDsOfArrayElements($request->input('tagline'), Tag::class, 'name');
         $postAdd->tags()->sync($tagsId);
 
-        $categoriesId = $this->manyToMany($request->input('categories'), Category::class, 'name');
+        $categoriesId = $this->stringInIDsOfArrayElements($request->input('categories'), Category::class, 'name');
         $postAdd->categories()->sync($categoriesId);
 
         return redirect('/post/' . $postAdd->slug);
@@ -83,6 +110,13 @@ class PostController extends Controller
 
     public function showPostEditing($id)
     {
+        if (Auth::id() === 1){
+            $this->authorize('update');
+        }
+        else {
+            $this->authorize('update', Post::find($id));
+        }
+
         $post = Post::find($id);
 
         $categoryName = [];
@@ -124,10 +158,10 @@ class PostController extends Controller
         $post->fulltext = $request->input('fulltext');
         $post->save();
 
-        $categoriesId = $this->manyToMany($request->input('categories'), Category::class, 'name');
+        $categoriesId = $this->stringInIDsOfArrayElements($request->input('categories'), Category::class, 'name');
         $post->categories()->sync($categoriesId);
 
-        $tagsId = $this->manyToMany($request->input('tagline'), Tag::class, 'name');
+        $tagsId = $this->stringInIDsOfArrayElements($request->input('tagline'), Tag::class, 'name');
         $post->tags()->sync($tagsId);
 
         return redirect('/post/' . $post->slug);
@@ -136,6 +170,13 @@ class PostController extends Controller
 
     public function postDeletion($id)
     {
+        if (Auth::id() === 1){
+            $this->authorize('delete');
+        }
+        else {
+            $this->authorize('delete', Post::find($id));
+        }
+
         Post::find($id)->delete();
         return redirect('/');
     }
