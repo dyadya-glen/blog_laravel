@@ -18,7 +18,6 @@
                     <hr>
                     <ul class="navigation">
                         <li> <a href="/">Главная</a> </li>
-                        <li> <a href="one">Пост</a> </li>
                         <li> <a href="about-me">Обо мне</a> </li>
                         <li> <a href="feedback">Обратная связь</a> </li>
                     </ul>
@@ -29,10 +28,10 @@
                     <h6>Контакты</h6>
                     <hr>
                     <span class="widget-contact__text">
-                        <span class="widget-contact__title">Иванов Иван Иванович</span>
-                        <br>Email: ivan@ivanov.ru
-                        <br>Skype: ivanovivan
-                        <br>VK: https://vk.com/ivanovoficial
+                        <span class="widget-contact__title">Роман Гуляев</span>
+                        <br><a href="mailto:glen2001@yandex.ru">Email: glen2001@yandex.ru</a>
+                        <br><a href="skype:dyadyaglen">Skype: dyadyaglen</a>
+                        <br><a href="https://vk.com/dyadya_glen" target="blank">VK: vk.com/dyadya_glen</a>
                         </span>
                 </div>
             </div>

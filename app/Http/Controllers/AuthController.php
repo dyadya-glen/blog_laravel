@@ -38,24 +38,6 @@ class AuthController extends Controller
                 ->with('message-email', 'Пароль или E-mail введён неверно!')
                 ->withInput();
        }
-//        try {
-//            $authEmail = User::where('email', '=', $request->input('email'))
-//                ->first(['email', 'password']);
-//            $authPassword = password_verify($request->input('password'),$authEmail->password);
-//        }  catch (\Exception $e) {
-//            $authEmail = false;
-//            $authPassword = false;
-//        }
-
-
-//        if (!$authEmail || !$authPassword) {
-//            return redirect()
-//                ->back()
-//                ->with('message-email', 'Пароль или E-mail введён неверно!')
-//                ->withInput();
-//        }
-
-//        return redirect('/');
     }
 
     /**

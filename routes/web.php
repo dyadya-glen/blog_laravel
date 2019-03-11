@@ -13,12 +13,8 @@
 
 Route::get('/', 'MainController@index')->name('homePage');
 
-Route::get('/about-me', function () {
-    return view('layouts.primary',[
-        'page' => 'pages.about',
-        'title' => 'Обо мне'
-    ]);
-});
+
+Route::get('/about-me', 'aboutController@showPage')->name('aboutMe');
 
 
 Route::get('/search-results', 'SearchController@searchShow')

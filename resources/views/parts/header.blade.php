@@ -19,9 +19,11 @@
                         </li>
                         @endunless
                         @auth
+                            @can('create', App\Models\Post::class)
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="/post/creation">Добавить пост</a>
                         </li>
+                            @endcan
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="/auth/logout">Выйти</a>
                         </li>
