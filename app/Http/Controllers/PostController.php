@@ -69,13 +69,6 @@ class PostController extends Controller
 
     public function showCreationOfPost()
     {
-//        try{
-//            $this->authorize('create');
-//        } catch (\Exception $e){
-//            return redirect()->back();
-//        }
-        //$this->authorize('create');
-        //dump(Auth::id());
         $this->authorize('create');
 
         return view('layouts.secondary',[
