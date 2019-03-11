@@ -27,7 +27,7 @@
             <div class="col-xs-10  col-xs-offset-1">
                 <div class="post-content--front-page">
                     <h2 class="front-page-title">
-                        <a href="post.html">{{ $post->title }}</a>
+                        <a href="/post/{{ $post->slug }}">{{ $post->title }}</a>
                     </h2>
                     <h3>{{ $post->tagline }}</h3>
                     {!! $post->announce !!}
